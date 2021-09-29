@@ -4,28 +4,29 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const addBookHandler = require('./Module/book')
-const getBooksHandler = require('./Module/book')
-const deleteBookHandler = require('./Module/book')
-
 const server = express();
 server.use(cors());
 const PORT = process.env.PORT;
 
+server.use(express.json());
 
+const bookModule = require('./Module/book');
+const addBookHandler = bookModule.addBookHandler;
+const getBooksHandler = bookModule.getBooksHandler;
+const deleteBookHandler = bookModule.deleteBookHandler;
 
 
 server.get('/', homeHandler);
-server.get('/books', getBooksHandler)
+server.get('/getbooks', getBooksHandler)
 server.post('/addBook', addBookHandler);
 server.delete('/deletebook', deleteBookHandler);
 
 
-server.get('*', notFoundHandler);
+// server.get('*', notFoundHandler);
 
-function notFoundHandler(req, res) {
-    res.status(404).send('not found 404')
-}
+// function notFoundHandler(req, res) {
+//     res.status(404).send('not found 404')
+// }
 
 function homeHandler(req, res) {
     res.send('all good')
