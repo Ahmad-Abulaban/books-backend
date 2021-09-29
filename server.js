@@ -14,13 +14,13 @@ const bookModule = require('./Module/book');
 const addBookHandler = bookModule.addBookHandler;
 const getBooksHandler = bookModule.getBooksHandler;
 const deleteBookHandler = bookModule.deleteBookHandler;
-
+const updateBookHandler = bookModule.updateBookHandler;
 
 server.get('/', homeHandler);
 server.get('/getbooks', getBooksHandler)
 server.post('/addBook', addBookHandler);
 server.delete('/deletebook', deleteBookHandler);
-
+server.put('/updatebook', updateBookHandler);
 
 // server.get('*', notFoundHandler);
 

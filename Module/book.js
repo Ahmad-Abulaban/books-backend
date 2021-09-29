@@ -1,6 +1,6 @@
 const  mongoose  = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/BooksBackend');
+mongoose.connect(`${process.env.REACT_APP_SERVER}`);
 
 const BooksSchema = new mongoose.Schema({
     title: String,
@@ -100,4 +100,24 @@ function deleteBookHandler(req, res) {
 // seedBookInformation();
 
 
-module.exports = {getBooksHandler , addBookHandler , deleteBookHandler};
+updateBookHandler = (req, res) => {
+    let { title, description, status, email, _id } = req.body;
+    BooksModel.findByIdAndUpdate(_id, { title, description, status }, (error, updatedData) => {
+        if (error) { 
+            console.log('error in updating') 
+        } else {
+            BooksModel.find({ email },(error, data) => {
+                if (error) {
+                    console.log('error in getting data', error)
+                } else {
+                    res.send(data)
+                }
+            })
+        }
+    })
+}
+
+
+
+
+module.exports = {getBooksHandler , addBookHandler , deleteBookHandler, updateBookHandler};
